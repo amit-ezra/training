@@ -1,0 +1,89 @@
+@startuml
+
+participant "USER" as user
+participant "ES MicroService" as ms
+participant "Elastic Search" as es
+participant "OKTA" as okta
+
+
+title Write Case Variants
+autoactivate on
+
+== Valid Request ==
+
+user -> ms: **POST** ""/variants/EMG123456789"" 
+rnote right user
+**headers**
+  Authorization Bearer //<Token>//
+**payload**
+  {"variants": [list of variants data...]
+end note
+
+ms -> okta: **POST** /authenticate
+rnote right ms
+**headers**
+  Authorization Bearer //<Token>//
+end note
+
+return 200 ok
+
+return 201 OK
+
+ms -> es: **POST** ""/index/_bulk/""
+rnote right ms
+**payload**
+  {"_index": <index>,
+   "_type": "varaints",
+   "_op_type": "create"
+   }
+end note
+
+
+                '_index': index,
+                '_type': 'variants',
+                '_op_type': 'create',
+                '_id': self.__generate_es_id__(variant, case_name, sample_name),
+                '_source': processed_variant
+
+
+return 201 OK
+
+
+== Wrong Credentials ==
+
+
+user -> ms: **POST** ""/variants/EMG123456789"" 
+rnote right user
+**headers**
+  Authorization Bearer //<Bad Token>//
+end note
+
+ms -> okta: **POST** /authenticate
+rnote right ms
+**headers**
+  Authorization Bearer //<Bad Token>//
+end note
+
+return 403 Forbidden
+
+return 403 Forbidden
+
+== Missing Auth Header ==
+
+user -> ms: **POST** ""/variants/EMG123456789"" 
+
+return 401 Unauthorized
+
+== Bad Request ==
+
+user -> ms: **POST** ""/variants/EMG123456789"" 
+rnote right ms
+**payload**
+{bla bla
+end note
+
+
+return 400 bad request
+
+
+@enduml
