@@ -29,51 +29,72 @@ The added benefit of such microservice, is that it allows us to better manage R&
 
 ### New Case
 **POST** /v1/variants/EMG1235678
+
 Headers: Authorization: Bearer <token>
+
 Payload: {"variants": [<list of variants data>]}
 
 Responses:
+
 201 OK
+
 403 Forbidden
+
 401 Authentication Required
+
 400 Bad Request
 
 ### Update Case
 **PUT** /v1/variants/EMG1235678
+
 Headers: Authorization: Bearer <token>
+
 Payload: {"variants": [<list of variants data>]}
 
 Responses:
+
 201 OK
+
 403 Forbidden
+
 401 Authentication Required
+
 400 Bad Request
 
 ### Read Case variants
 **GET** /v1/variants/EMG1235678
+
 Headers: Authorization: Bearer <token>
 
 Responses:
+
 200 OK
 {"variants": [<list of variants data>]}
 
 403 Forbidden
+
 401 Authentication Required
+
 400 Bad Request
 
 
 ### Delete Case
 **DELETE** /v1/variants/EMG1235678
+
 Headers: Authorization: Bearer <token>
+
 Payload: {"variants": [<list of variants data>]}
 
 Responses:
+
 201 OK
+
 403 Forbidden
+
 401 Authentication Required
+
 400 Bad Request
 
 
 
-![diagram](http://www.plantuml.com/plantuml/svg/1S513WCX20NGVK_H7g2oxsse4YKHDV3997FwUU-ZgyviaZxV0pZn8tA-IbUC_6U8rxqW2wLk8pR5LsvdWWJ8E21EJRaxMpapxVK0)
-test
+![diagram](http://www.plantuml.com/plantuml/svg/3SKn3W9120NGtbFe0HnwUqkhFG4YsI4PcCqVqCJJwslUnK96lRGmpZtpM3SYyAVjbhsUjHGo8pMooNHYjxpg5qm9jh3OoNcbWkxZlycc3EaF4ynDyJRHTepoqmy0)
