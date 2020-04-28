@@ -6,7 +6,7 @@
 * [Requirements](#requirements)
 * [API](#api) 
 * [Security](#security) 
-* [Deployement](#deployement) 
+* [Deployement](#deployment) 
 * [Backward Compatibility](#backward-compatibility) 
 
 
@@ -94,7 +94,30 @@ Responses:
 401 Authentication Required
 
 400 Bad Request
-
+ 
+ 
+### Direct Access to ElasticSearch
+If enabled the microservice will allow tunneling and direct access to Elastic Search. This means that any request that is not covered by the above API, will just be re-directed directly there. 
 
 
 ![diagram](http://www.plantuml.com/plantuml/svg/3SKn3W9120NGtbFe0HnwUqkhFG4YsI4PcCqVqCJJwslUnK96lRGmpZtpM3SYyAVjbhsUjHGo8pMooNHYjxpg5qm9jh3OoNcbWkxZlycc3EaF4ynDyJRHTepoqmy0)
+
+
+## Security
+
+Authentication for access to the microserivice will be done by passing an OAuth Authentication header with a Bearer token. The header will be validated using third party OKTA microservice
+
+Access directly to ElasticSearch will be limited by the network level to be allowed only from the microservice using AWS security group.
+
+## Deployment
+First stage - deploy the new MS using docker on ECS. Run sanity and make sure everything is working.
+Second stage - Enable allow passthrough requests to ES. Run Sanity and make sure it's working.
+Third Stage - update configuration for all Emedgene services to use the new MS instead of directly ES \ change DNS endpoint to point to the MS instead of ES. 
+Fourth stage - Close direct access to ES.
+Fifth stage - optional - Disable passthrough requests to ES from the MS
+
+## Backward Compatibility
+While passthrough requests are enabled, we maintine backward compatibility. Once we disable it backward compatibility is disabled. 
+
+
+
