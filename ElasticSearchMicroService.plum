@@ -9,7 +9,7 @@ participant "OKTA" as okta
 title Write Case Variants
 autoactivate on
 
-== Valid Request ==
+== NOT Valid Request ==
 
 user -> ms: **POST** ""/variants/EMG123456789"" 
 rnote right user
