@@ -26,7 +26,7 @@ The added benefit of such microservice, is that it allows us to better manage R&
 
 
 ## API 
- 
+### swagger -  https://app.swaggerhub.com/apis/amit-ezra/exemple-hld/1.0.0#/ 
 ### New Case
 **POST** /v1/variants/EMG1235678
 
