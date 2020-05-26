@@ -1,0 +1,675 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "description" : "This is a postman collection in order to share more information about Emedgene Add new case integration.",
+    "version" : "1.1.0",
+    "title" : "Emedgene - UPMC",
+    "contact" : {
+      "email" : "support@emedgene.com"
+    }
+  },
+  "paths" : {
+    "/test" : {
+      "get" : {
+        "summary" : "Get list of cases",
+        "operationId" : "listCases",
+        "parameters" : [ {
+          "name" : "resolved",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "boolean"
+          },
+          "description" : "get only solved cases"
+        }, {
+          "name" : "from",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "description" : "get results starting from index. pagination"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "default" : 10
+          },
+          "description" : "how many hits to return. pagination"
+        }, {
+          "name" : "order_by",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "name", "status", "created" ]
+          }
+        }, {
+          "name" : "order_by_ascend",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "q",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "wild card search. Will find all cases that have that in one of their fields. Including, but not limited to [test_data, test_name, test_type, username, disease, evidence_text, genes]."
+        }, {
+          "name" : "label",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "find cases with these labels (based on organization settings)"
+        }, {
+          "name" : "status",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "description" : "find cases in these status"
+        }, {
+          "name" : "testType",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "group",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "user",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "filter",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "enum" : [ "stale", "unread", "quality" ]
+            }
+          }
+        }, {
+          "name" : "admin",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "boolean",
+            "default" : false
+          }
+        }, {
+          "name" : "from_created_date_date",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "datetime"
+          },
+          "example" : "1879-05-14"
+        }, {
+          "name" : "to_created_date",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "datetime"
+          },
+          "example" : "1879-05-14"
+        }, {
+          "name" : "include_reanalysis_count",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "boolean"
+          }
+        }, {
+          "name" : "organization",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "from_status_change_date",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "datetime"
+          },
+          "example" : "1879-05-14"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of cases",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CasesListResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Internal server error",
+            "content" : {
+              "text/html" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Internal server error",
+            "content" : {
+              "text/html" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test_gene_list" : {
+      "get" : {
+        "tags" : [ "Gene_list" ],
+        "summary" : "Get all gene lists",
+        "description" : "",
+        "operationId" : "test_gene_lists",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GeneListResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ],
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "query",
+          "description" : "filter gene lists name by string.",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ]
+      }
+    },
+    "/test/" : {
+      "post" : {
+        "tags" : [ "Case" ],
+        "summary" : "Create a case",
+        "description" : "",
+        "operationId" : "createCase",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Case"
+              }
+            }
+          },
+          "description" : "case object",
+          "required" : true
+        },
+        "responses" : {
+          "400" : {
+            "description" : "Invalid input"
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    }
+  },
+  "servers" : [ {
+    "url" : "https://upmc.emedgene.com/api"
+  } ],
+  "components" : {
+    "securitySchemes" : {
+      "api_key" : {
+        "type" : "apiKey",
+        "name" : "Authentication-Token",
+        "in" : "header"
+      }
+    },
+    "schemas" : {
+      "Case" : {
+        "type" : "object",
+        "required" : [ "test_data" ],
+        "properties" : {
+          "test_data" : {
+            "$ref" : "#/components/schemas/CaseData"
+          }
+        }
+      },
+      "CaseData" : {
+        "type" : "object",
+        "required" : [ "sample_type", "type", "patients" ],
+        "properties" : {
+          "sample_type" : {
+            "type" : "string",
+            "default" : "vcf"
+          },
+          "consanguinity" : {
+            "type" : "boolean",
+            "default" : false
+          },
+          "type" : {
+            "type" : "string",
+            "default" : "Panel"
+          },
+          "notes" : {
+            "type" : "string",
+            "description" : "Clinical notes"
+          },
+          "samples" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Sample"
+            }
+          },
+          "patients" : {
+            "$ref" : "#/components/schemas/Patients"
+          },
+          "gene_list" : {
+            "$ref" : "#/components/schemas/CaseGeneList"
+          },
+          "extra_data" : {
+            "$ref" : "#/components/schemas/ExtraData"
+          }
+        }
+      },
+      "Sample" : {
+        "type" : "object"
+      },
+      "Patients" : {
+        "type" : "object",
+        "properties" : {
+          "proband" : {
+            "$ref" : "#/components/schemas/Patient"
+          },
+          "other" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Patient"
+            }
+          }
+        }
+      },
+      "Patient" : {
+        "type" : "object",
+        "required" : [ "fastq_sample", "gender", "healthy", "relationship", "phenotypes", "id" ],
+        "properties" : {
+          "fastq_sample" : {
+            "type" : "string",
+            "default" : "UUID",
+            "description" : "HL7 \"Patient name\""
+          },
+          "gender" : {
+            "type" : "string",
+            "enum" : [ "Male", "Female", "Unknown" ],
+            "default" : "Female"
+          },
+          "healthy" : {
+            "type" : "boolean",
+            "default" : false
+          },
+          "relationship" : {
+            "type" : "string",
+            "default" : "Test Subject"
+          },
+          "phenotypes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Phenotype"
+            }
+          },
+          "id" : {
+            "type" : "string",
+            "default" : "proband"
+          },
+          "date_of_birth" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "YYYY-MM-DD",
+            "example" : "1879-03-14T00:00:00.000Z"
+          },
+          "detailed_ethnicity" : {
+            "type" : "object",
+            "properties" : {
+              "parental" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/Etnicity"
+                }
+              },
+              "maternal" : {
+                "type" : "array",
+                "items" : {
+                  "$ref" : "#/components/schemas/Etnicity"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Phenotype" : {
+        "type" : "object"
+      },
+      "CaseGeneList" : {
+        "type" : "object",
+        "required" : [ "id", "type" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "default" : "735"
+          },
+          "type" : {
+            "type" : "string",
+            "default" : "existing"
+          }
+        }
+      },
+      "GeneList" : {
+        "type" : "object",
+        "required" : [ "id", "name" ],
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      },
+      "GeneListResponse" : {
+        "type" : "object",
+        "required" : [ "hits", "total" ],
+        "properties" : {
+          "hits" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/GeneList"
+            }
+          },
+          "total" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "ExtraData" : {
+        "type" : "object",
+        "properties" : {
+          "hospital" : {
+            "type" : "string",
+            "description" : "please hide from users"
+          },
+          "pid" : {
+            "type" : "string",
+            "description" : "Medical Record"
+          },
+          "account_number" : {
+            "type" : "string",
+            "description" : "please hide from users"
+          },
+          "order_number" : {
+            "type" : "string"
+          },
+          "provider" : {
+            "type" : "string"
+          },
+          "test_code" : {
+            "type" : "string",
+            "description" : "Gene list name."
+          },
+          "order_loc" : {
+            "type" : "string",
+            "description" : "please hide from users"
+          },
+          "specimen" : {
+            "type" : "string"
+          },
+          "ccd_provider" : {
+            "type" : "string",
+            "description" : "Other provider"
+          },
+          "collected" : {
+            "type" : "string"
+          },
+          "lab_number" : {
+            "type" : "string"
+          },
+          "patient_first_name" : {
+            "type" : "string"
+          },
+          "patient_middle_name" : {
+            "type" : "string"
+          },
+          "patient_last_name" : {
+            "type" : "string"
+          },
+          "collected_date" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "YYYY-MM-DD e.g.",
+            "example" : "1879-03-14T00:00:00.000Z"
+          },
+          "received_date" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "YYYY-MM-DD e.g.",
+            "example" : "1879-03-14T00:00:00.000Z"
+          },
+          "accession_id" : {
+            "type" : "string",
+            "description" : "Order Number + Prefix"
+          },
+          "provider_first_name" : {
+            "type" : "string"
+          },
+          "provider_middle_name" : {
+            "type" : "string"
+          },
+          "provider_last_name" : {
+            "type" : "string"
+          },
+          "provider_pid" : {
+            "type" : "string"
+          },
+          "indication_for_testing" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Etnicity" : {
+        "type" : "string",
+        "enum" : [ "African American", "Chinese", "Asian", "Filipino", "Guam/Chamorro", "Indian (Asian)", "Japanese", "Korean", "Alaska Native", "Native American", "Other Pacific Islander", "Hawaiian", "Samoan", "Vietnamese", "European American" ]
+      },
+      "CasesListResponse" : {
+        "required" : [ "hits", "total" ],
+        "type" : "object",
+        "properties" : {
+          "hits" : {
+            "type" : "array",
+            "description" : "List of phenotypes.",
+            "items" : {
+              "$ref" : "#/components/schemas/CaseReponse"
+            }
+          },
+          "total" : {
+            "type" : "integer",
+            "description" : "Amount of returned phenotypes."
+          }
+        }
+      },
+      "CaseReponse" : {
+        "required" : [ "id", "organization", "name", "gene_list_id", "status", "status_change_date", "created", "due_date", "last_access_date", "type", "resolved", "pipeline_version", "signing_notes", "quality", "delivered_date", "sample_type", "labels", "benderStatus", "analysisType", "group_participants", "participants", "bad_genes", "patients" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "organization" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "gene_list_id" : {
+            "type" : "integer"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "status_change_date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "created" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "due_date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "last_access_date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "resolved" : {
+            "type" : "integer",
+            "enum" : [ 0, 1, 2, 3 ]
+          },
+          "pipeline_version" : {
+            "type" : "string"
+          },
+          "signing_notes" : {
+            "type" : "string"
+          },
+          "quality" : {
+            "type" : "integer"
+          },
+          "delivered_date" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "sample_type" : {
+            "type" : "string",
+            "enum" : [ "fastq", "vcf", "project_vcf", "other_test" ]
+          },
+          "labels" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "benderStatus" : {
+            "type" : "string"
+          },
+          "analysisType" : {
+            "type" : "string"
+          },
+          "group_participants" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "participants" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          },
+          "bad_genes" : {
+            "type" : "boolean"
+          },
+          "patients" : {
+            "$ref" : "#/components/schemas/Patients"
+          },
+          "kit" : {
+            "type" : "string"
+          },
+          "geneListName" : {
+            "type" : "string"
+          },
+          "genes" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "creator" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "signer" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "unread" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "User" : {
+        "required" : [ "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
